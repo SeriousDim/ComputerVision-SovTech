@@ -8,8 +8,8 @@ def f(x):
 # SEARCH OTHER FUNCTIONS: ADAPTIVE THRESHOLDS
 path = "pics\\roads"
 images = [os.path.join(path, f) for f in os.listdir(path)]
-img = cv.imread(images[6])
-del_c = int(img.shape[1]/700)
+img = cv.imread(images[0])
+del_c = int(img.shape[1]/480)
 if del_c == 0: del_c = 1
 img = cv.resize(img, (img.shape[1]//del_c, img.shape[0]//del_c))
 img_orig = img.copy()
@@ -26,6 +26,8 @@ while 1:
     v1 = cv.getTrackbarPos('min', 'set')
     v2 = cv.getTrackbarPos('max', 'set')
     img = img_orig.copy()
+    hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
+    h, s, v = cv.split(hsv)
     can = cv.Canny(img, v1, v2)
     lines = []
     lines_2 = []
@@ -86,6 +88,10 @@ while 1:
     cv.line(img, (lines_2[0][0], line_y_2), (lines_2[-1][0] + lines_2[-1][1], line_y_2), (0, 0, 255), 2)
 
     cv.line(img, (((lines[0][0]+lines[-1][0]+lines[-1][1])//2), line_y), (((lines_2[0][0]+lines_2[-1][0]+lines_2[-1][1])//2), line_y_2), (0, 255, 0), 3)
+
+    cv.imshow('h', h)
+    cv.imshow('s', s)
+    cv.imshow('v', v)
 
     cv.imshow('orig', img)
     cv.imshow('canny', can)

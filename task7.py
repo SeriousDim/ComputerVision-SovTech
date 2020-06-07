@@ -28,7 +28,8 @@ while 1:
     frame_small = cv2.resize(frame, size)
     hsv_temp = cv2.cvtColor(frame_small, cv2.COLOR_BGR2HSV)
     bw = cv2.inRange(hsv_temp, (0, 0, 0), (180, 255, 84))
-    line = bw[bw.shape[0] - 20]
+    line = bw[bw.shape[0] - 60]
+    cv2.line(frame_small, (0, bw.shape[0] - 60), (bw.shape[1], bw.shape[0] - 60), (0, 255, 0))
     line_zoom = cv2.resize(line, (100, line.shape[0]))
     # print(line)
     segment = []
@@ -47,6 +48,7 @@ while 1:
         cv2.circle(frame, (temp_circle[0] * 3, frame.shape[0] - 60), temp_circle[1], (255, 255, 255))
     find_max()
     cv2.imshow('CAM0', frame)
+    cv2.imshow('small', frame_small)
     cv2.imshow('B\W', bw)
     cv2.imshow('Zoom', line_zoom.T)
     key = cv2.waitKey(20)
