@@ -19,10 +19,13 @@ with open('yolo\\yolo.txt', 'r') as f:
     classes = [line.strip() for line in f.readlines()]
 
 COLORS = np.random.uniform(0, 255, size=(len(classes), 3))
-net = cv.dnn.readNet('yolo\\yolo.weights', 'yolo\\yolo.cfg')
+net = cv.dnn.readNet('yolo\\tiny.weights', 'yolo\\yolo.cfg')
 
 cam = cv.VideoCapture(0)
-scale = 0.00329
+cam.set(3, 960)
+cam.set(4, 720)
+
+scale = 0.01329
 
 while 1:
     _, image = cam.read()
